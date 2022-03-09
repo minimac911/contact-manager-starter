@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
@@ -66,6 +67,14 @@ class ContactManagerTest {
     public void shouldTestContactCreationOnDev() {
         Assumptions.assumeTrue("DEV".equals(System.getProperty("ENV")));
         contactManager.addContact("First", "last", "0123456789");
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+    }
+
+    @DisplayName("Repeat contact creation 5 times")
+    @RepeatedTest(5)
+    public void shouldTestContactCreationRepeatedly() {
+        contactManager.addContact("First", "Last", "0123456789");
         assertFalse(contactManager.getAllContacts().isEmpty());
         assertEquals(1, contactManager.getAllContacts().size());
     }
