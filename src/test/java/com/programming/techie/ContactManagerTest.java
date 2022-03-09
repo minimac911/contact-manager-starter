@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +29,7 @@ class ContactManagerTest {
 
     @Test
     @DisplayName("Should create a contact")
+    @EnabledOnOs(value = OS.MAC, disabledReason = "This should run only on macs")
     public void shouldCreateContact() {
         contactManager.addContact("Thomas", "Test", "0123456789");
         assertFalse(contactManager.getAllContacts().isEmpty());
