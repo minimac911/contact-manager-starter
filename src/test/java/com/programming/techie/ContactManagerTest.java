@@ -3,6 +3,7 @@ package com.programming.techie;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,6 +59,15 @@ class ContactManagerTest {
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactManager.addContact("Thomas", "Test", null);
         });
+    }
+
+    @Test
+    @DisplayName("Test contact creation on the developers machine")
+    public void shouldTestContactCreationOnDev() {
+        Assumptions.assumeTrue("DEV".equals(System.getProperty("ENV")));
+        contactManager.addContact("First", "last", "0123456789");
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
     }
 
     @AfterEach
